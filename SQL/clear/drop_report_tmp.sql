@@ -1,0 +1,1 @@
+drop  table if exists yfurman.project_report_tmp_{{ execution_date.year }};
