@@ -1,6 +1,6 @@
 -- 1.3.5 CREATE VIEW FOR TRAFFIC
 
-create view rtk_de.yfurman.project_view_traffic_one_year_{{ execution_date.year }} as (
+create view {{ params.prefix }}_view_traffic_one_year_{{ execution_date.year }} as (
 
 	with staging as (
 		with derived_columns as (
@@ -15,7 +15,7 @@ create view rtk_de.yfurman.project_view_traffic_one_year_{{ execution_date.year 
 				device_id::varchar as DEVICE_KEY,
 				device_ip_addr::varchar as IP_ADDR_KEY,
 				'TRAFFIC - DATA LAKE'::varchar as RECORD_SOURCE
-			from yfurman.project_ods_traffic
+			from {{ params.prefix }}_ods_traffic
 			where cast(extract('year' from time_stamp) as int) = {{ execution_date.year }}
 		),
 		
@@ -71,8 +71,7 @@ create view rtk_de.yfurman.project_view_traffic_one_year_{{ execution_date.year 
 		select * from columns_to_select
 	)
 	
-	select *, 
-			--current_timestamp as LOAD_DATE,			
+	select *, 			
 	        '{{ execution_date }}'::timestamp as LOAD_DATE,
 			time_stamp as EFFECTIVE_FROM
 	from staging
