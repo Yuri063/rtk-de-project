@@ -81,7 +81,7 @@ create table yfurman.project_report_tmp_{{ execution_date.year }} as (
 			left join yfurman.project_dds_hub_billing_mode hbm on lm.BILLING_MODE_PK = hbm.BILLING_MODE_PK
 			left join yfurman.project_dds_sat_mdm_details smd on lm.MDM_PK = smd.MDM_PK			
 
-			where extract(year from to_date(BILLING_PERIOD_KEY, 'YYYY-MM')) = {{ execution_date.year }}			
+			where extract(year from to_date(rup.BILLING_PERIOD_KEY, 'YYYY-MM')) = {{ execution_date.year }}			
 
 		)	
 				
