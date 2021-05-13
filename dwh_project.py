@@ -135,8 +135,8 @@ for phase in (INIT_PHASE, ETL_PHASE, DM_PHASE, FINISH_PHASE):
         get_jobs_context(jobs) >> check_point
 '''
 
-for phase in PHASES:
-    check_point_last = None
+check_point_last = None
+for phase in PHASES:   
     for job in phase.list_jobs:
         check_point = get_check_point(phase.name, job.name)
         if check_point_last:
