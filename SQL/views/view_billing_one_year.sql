@@ -1,6 +1,5 @@
 -- 1.3.3 CREATE VIEW FOR BILLING
 
--- create view rtk_de.yfurman.project_view_billing_one_year_{{ execution_date.year }} as (
 create view {{ params.prefix }}_view_billing_one_year_{{ execution_date.year }} as (
 
 	with staging as (
@@ -17,7 +16,6 @@ create view {{ params.prefix }}_view_billing_one_year_{{ execution_date.year }} 
 				service::varchar as SERVICE_KEY,
 				tariff::varchar as TARIFF_KEY,
 				'BILLING - DATA LAKE'::varchar as RECORD_SOURCE
-			-- from yfurman.project_ods_billing
 			from {{ params.prefix }}_ods_billing
 			where cast(extract('year' from created_at) as int) = {{ execution_date.year }}
 		),
@@ -79,7 +77,6 @@ create view {{ params.prefix }}_view_billing_one_year_{{ execution_date.year }} 
 	)
 	
 	select *, 
-			--current_timestamp as LOAD_DATE,			
 	        '{{ execution_date }}'::timestamp as LOAD_DATE,
 			created_at as EFFECTIVE_FROM
 	from staging
