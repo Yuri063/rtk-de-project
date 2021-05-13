@@ -56,7 +56,7 @@ def get_job_context(phase_name, job):
     tasks = []
     for task_file_name in [i for i in os.listdir(os.path.join(ROOT_DIR, DATA_DIR, job.source_path)) if i.endswith(job.mask)]:
         tasks.append(PostgresOperator(
-            task_id='{}_{}_{}'.format(phase_name, job.name, os.path.splitext(task_file_name)[0]),
+            task_id='{}:{}:{}'.format(phase_name, job.name, os.path.splitext(task_file_name)[0]),
             dag=dag,
             params={'prefix': PREFIX_NAME},
             sql=os.path.join(job.source_path, task_file_name)
@@ -65,7 +65,7 @@ def get_job_context(phase_name, job):
 
 
 def get_check_point(phase_name, job_name):
-    return DummyOperator(task_id="{}_{}_complete".format(phase_name, job_name), dag=dag)
+    return DummyOperator(task_id="{}:{}:complete".format(phase_name, job_name), dag=dag)
 
 
 default_args = {
