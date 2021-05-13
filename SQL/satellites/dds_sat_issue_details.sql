@@ -3,7 +3,7 @@
 with source_data as (
 	select 
 		ISSUE_PK, ISSUE_HASHDIFF, 
-		start_time, end_time, title, service,
+		start_time, end_time, title, description, service,
 		EFFECTIVE_FROM, 
 		LOAD_DATE, RECORD_SOURCE
 	from yfurman.project_view_issue_one_year_{{ execution_date.year }}
@@ -11,7 +11,7 @@ with source_data as (
 update_records as (
 	select 
 		a.ISSUE_PK, a.ISSUE_HASHDIFF, 
-		a.start_time, a.end_time, a.title, a.service,
+		a.start_time, a.end_time, a.title, a.description, a.service,
 		a.EFFECTIVE_FROM, 
 		a.LOAD_DATE, a.RECORD_SOURCE
 	from yfurman.project_dds_sat_issue_details as a
@@ -33,7 +33,7 @@ latest_records as (
 records_to_insert as (
 	select distinct 
 		e.ISSUE_PK, e.ISSUE_HASHDIFF, 
-		e.start_time, e.end_time, e.title, e.service,
+		e.start_time, e.end_time, e.title, e.description, e.service,
 		e.EFFECTIVE_FROM, 
 		e.LOAD_DATE, e.RECORD_SOURCE
 	from source_data as e
@@ -44,13 +44,13 @@ records_to_insert as (
 )	
 insert into yfurman.project_dds_sat_issue_details (
 	ISSUE_PK, ISSUE_HASHDIFF, 
-	start_time, end_time, title, service,
+	start_time, end_time, title, description, service,
 	EFFECTIVE_FROM, 
 	LOAD_DATE, RECORD_SOURCE)
 (
 	select 
 		ISSUE_PK, ISSUE_HASHDIFF, 
-		start_time, end_time, title, service,
+		start_time, end_time, title, description, service,
 		EFFECTIVE_FROM, 
 		LOAD_DATE, RECORD_SOURCE
 	from records_to_insert
