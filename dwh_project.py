@@ -93,7 +93,8 @@ def get_jobs_context(phase_name, job):
 def get_jobs_context(phase_name, job):
     tasks = []
     #search_path = os.path.join(ROOT_DIR, DATA_DIR, job.source_path)
-    for task_file_name in [i for i in os.listdir(search_path) if i.endswith(job.mask)]:
+    #for task_file_name in [i for i in os.listdir(search_path) if i.endswith(job.mask)]:
+    for task_file_name in [i for i in os.listdir(os.path.join(ROOT_DIR, DATA_DIR, job.source_path)) if i.endswith(job.mask)]:
         tasks.append(PostgresOperator(
             task_id='{}_{}_{}'.format(phase_name, job.name, os.path.splitext(task_file_name)[0]),
             dag=dag,
