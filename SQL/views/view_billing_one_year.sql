@@ -80,7 +80,7 @@ create view {{ dag_id }}_view_billing_one_year_{{ execution_date.year }} as (
 	
 	select *, 
 			--current_timestamp as LOAD_DATE,			
-	        '{{ execution_date.year }}'::timestamp as LOAD_DATE,
+	        '{{ execution_date }}'::timestamp as LOAD_DATE,
 			created_at as EFFECTIVE_FROM
 	from staging
 );
