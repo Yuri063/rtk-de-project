@@ -6,7 +6,7 @@ with source_data as (
 		created_at, sum,
 		EFFECTIVE_FROM, 
 		LOAD_DATE, RECORD_SOURCE
-	from yfurman.project_view_billing_one_year_{{ execution_date.year }}
+	from {{ params.prefix }}_view_billing_one_year_{{ execution_date.year }}
 ),
 update_records as (
 	select 
@@ -14,7 +14,7 @@ update_records as (
 		a.created_at, a.sum,
 		a.EFFECTIVE_FROM, 
 		a.LOAD_DATE, a.RECORD_SOURCE
-	from yfurman.project_dds_sat_billing_details as a
+	from {{ params.prefix }}_dds_sat_billing_details as a
 	join source_data as b
 	on a.BILLING_PK = b.BILLING_PK
 	where  a.LOAD_DATE <= b.LOAD_DATE
@@ -42,7 +42,7 @@ records_to_insert as (
 	   latest_records.BILLING_PK = e.BILLING_PK
 	where latest_records.BILLING_HASHDIFF is NULL
 )	
-insert into yfurman.project_dds_sat_billing_details (
+insert into {{ params.prefix }}_dds_sat_billing_details (
 	BILLING_PK, BILLING_HASHDIFF, 
 	created_at, sum,
 	EFFECTIVE_FROM, 
