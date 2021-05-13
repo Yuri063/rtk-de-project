@@ -1,6 +1,6 @@
 -- 1.3.2 CREATE VIEW FOR MDM
 
-create view {{ params.prefix }}_view_mdm_one_year_{{ execution_date.year }} as (
+create or replace view {{ params.prefix }}_view_mdm_one_year_{{ execution_date.year }} as (
 
 	with staging as (
 		with derived_columns as (
