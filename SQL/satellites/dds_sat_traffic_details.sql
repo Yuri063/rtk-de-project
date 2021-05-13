@@ -6,7 +6,7 @@ with source_data as (
 		time_stamp, bytes_sent, bytes_received,
 		EFFECTIVE_FROM, 
 		LOAD_DATE, RECORD_SOURCE
-	from yfurman.project_view_traffic_one_year_{{ execution_date.year }}
+	from {{ params.prefix }}_view_traffic_one_year_{{ execution_date.year }}
 ),
 update_records as (
 	select 
@@ -14,7 +14,7 @@ update_records as (
 		a.time_stamp, a.bytes_sent, a.bytes_received,
 		a.EFFECTIVE_FROM, 
 		a.LOAD_DATE, a.RECORD_SOURCE
-	from yfurman.project_dds_sat_traffic_details as a
+	from {{ params.prefix }}_dds_sat_traffic_details as a
 	join source_data as b
 	on a.TRAFFIC_PK = b.TRAFFIC_PK
 	where  a.LOAD_DATE <= b.LOAD_DATE
@@ -42,7 +42,7 @@ records_to_insert as (
 	   latest_records.TRAFFIC_PK = e.TRAFFIC_PK
 	where latest_records.TRAFFIC_HASHDIFF is NULL
 )	
-insert into yfurman.project_dds_sat_traffic_details (
+insert into {{ params.prefix }}_dds_sat_traffic_details (
 	TRAFFIC_PK, TRAFFIC_HASHDIFF, 
 	time_stamp, bytes_sent, bytes_received,
 	EFFECTIVE_FROM, 
