@@ -73,7 +73,7 @@ create view rtk_de.yfurman.project_view_traffic_one_year_{{ execution_date.year 
 	
 	select *, 
 			--current_timestamp as LOAD_DATE,			
-	        '{{ execution_date.year }}'::timestamp as LOAD_DATE,
+	        '{{ execution_date }}'::timestamp as LOAD_DATE,
 			time_stamp as EFFECTIVE_FROM
 	from staging
 );
