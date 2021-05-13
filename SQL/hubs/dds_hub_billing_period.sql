@@ -7,7 +7,7 @@ with row_rank_1 as (
 				partition by BILLING_PERIOD_PK
 				order by LOAD_DATE ASC
 			) as row_num
-		from yfurman.project_view_payment_one_year_{{ execution_date.year }}		
+		from {{ params.prefix }}_view_payment_one_year_{{ execution_date.year }}		
 	) as h where row_num = 1
 ),
 row_rank_2 as (
@@ -17,7 +17,7 @@ row_rank_2 as (
 				partition by BILLING_PERIOD_PK
 				order by LOAD_DATE ASC
 			) as row_num
-		from yfurman.project_view_billing_one_year_{{ execution_date.year }}		
+		from {{ params.prefix }}_view_billing_one_year_{{ execution_date.year }}		
 	) as h where row_num = 1
 ),
 stage_union as (
@@ -39,11 +39,11 @@ raw_union as (
 records_to_insert as (
 		select a.BILLING_PERIOD_PK, a.BILLING_PERIOD_KEY, a.LOAD_DATE, a.RECORD_SOURCE
 		from raw_union as a
-		left join yfurman.project_dds_hub_billing_period as d
+		left join {{ params.prefix }}_dds_hub_billing_period as d
 		on a.BILLING_PERIOD_PK = d.BILLING_PERIOD_PK
 		where d.BILLING_PERIOD_PK is NULL
 )
-insert into yfurman.project_dds_hub_billing_period (BILLING_PERIOD_PK, BILLING_PERIOD_KEY, LOAD_DATE, RECORD_SOURCE)
+insert into {{ params.prefix }}_dds_hub_billing_period (BILLING_PERIOD_PK, BILLING_PERIOD_KEY, LOAD_DATE, RECORD_SOURCE)
 (
 	select BILLING_PERIOD_PK, BILLING_PERIOD_KEY, LOAD_DATE, RECORD_SOURCE
 	from records_to_insert
