@@ -7,13 +7,13 @@ from airflow.operators.postgres_operator import PostgresOperator
 from airflow.operators.dummy_operator import DummyOperator
 
 
-USERNAME = 'yfurman'
+USERNAME = 'furman2'
 
 ROOT_DIR = os.getenv('AIRFLOW__CORE__DAGS_FOLDER', '/root/airflow/dags')
 DATA_DIR = '{}/SQL'.format(USERNAME)
 
-BASE_NAME = USERNAME
-PREFIX_NAME = '{}.project'.format(BASE_NAME)
+DATABASE_NAME = 'yfurman'
+PREFIX_NAME = '{}.project'.format(DATABASE_NAME)
 '''
 INIT_PHASE = ('VAR', 'LOAD_ODS_VIEWS',)
 ETL_PHASE = ('HUBS', 'LINKS', 'SATELLITES', )
@@ -52,7 +52,7 @@ PHASES = (
     FactoryPhase(
         name='FINISH',
         list_jobs=(
-            FactoryJob(name='CLEAR', source_path='clear'),
+            FactoryJob(name='CLEAR', source_path='clear', mask='.sql'),
         )
     ),
 )
