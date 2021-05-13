@@ -1,6 +1,6 @@
 -- 1.3.2 CREATE VIEW FOR MDM
 
-create view rtk_de.yfurman.project_view_mdm_one_year_{{ execution_date.year }} as (
+create view {{ params.prefix }}_view_mdm_one_year_{{ execution_date.year }} as (
 
 	with staging as (
 		with derived_columns as (
@@ -16,7 +16,7 @@ create view rtk_de.yfurman.project_view_mdm_one_year_{{ execution_date.year }} a
 				district::varchar as DISTRICT_KEY,
 				billing_mode::varchar as BILLING_MODE_KEY,
 				'MDM - DATA LAKE'::varchar as RECORD_SOURCE
-			from yfurman.project_ods_mdm
+			from {{ params.prefix }}_ods_mdm
 			where cast(extract('year' from registered_at) as int) = {{ execution_date.year }}
 		),
 		
@@ -76,8 +76,7 @@ create view rtk_de.yfurman.project_view_mdm_one_year_{{ execution_date.year }} a
 		select * from columns_to_select
 	)
 	
-	select *, 
-			--current_timestamp as LOAD_DATE,			
+	select *, 			
 	        '{{ execution_date }}'::timestamp as LOAD_DATE,
 			registered_at as EFFECTIVE_FROM
 	from staging
