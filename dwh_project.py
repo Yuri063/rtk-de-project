@@ -10,11 +10,10 @@ from airflow.operators.dummy_operator import DummyOperator
 USERNAME = 'yfurman'
 
 ROOT_DIR = os.getenv('AIRFLOW__CORE__DAGS_FOLDER', '/root/airflow/dags')
-DATA_DIR = f'{USERNAME}/SQL'
+DATA_DIR = '{}/SQL'.format(USERNAME)
 
-BASE_NAME = f'{USERNAME}'
-PREFIX_NAME = f'{BASE_NAME}.project'
-
+BASE_NAME = USERNAME
+PREFIX_NAME = '{}.project'.format(BASE_NAME)
 '''
 INIT_PHASE = ('VAR', 'LOAD_ODS_VIEWS',)
 ETL_PHASE = ('HUBS', 'LINKS', 'SATELLITES', )
