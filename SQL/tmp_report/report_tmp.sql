@@ -1,7 +1,7 @@
 -- 9. CREATE TMP TABLE (for ONE YEAR)
 
-
-create table if not exists {{ params.prefix }}_report_tmp_{{ execution_date.year }} as (
+drop  table if exists {{ params.prefix }}_report_tmp_{{ execution_date.year }};
+create table {{ params.prefix }}_report_tmp_{{ execution_date.year }} as (
 		with row_billing as (
 			select * from (
 				select BILLING_PK, sum, EFFECTIVE_FROM, LOAD_DATE, RECORD_SOURCE,
