@@ -6,14 +6,17 @@ from airflow import DAG
 from airflow.operators.postgres_operator import PostgresOperator
 from airflow.operators.dummy_operator import DummyOperator
 
-
 USERNAME = 'yfurman'
+HOME_PATH = 'furman2'
 
 ROOT_DIR = os.getenv('AIRFLOW__CORE__DAGS_FOLDER', '/root/airflow/dags')
-DATA_DIR = '{}/SQL'.format(USERNAME)
+#DATA_DIR = '{}/SQL'.format(USERNAME)
+DATA_DIR = '{}/SQL'.format(HOME_PATH)
 
-DATABASE_NAME = 'yfurman'
+DATABASE_NAME = USERNAME
 PREFIX_NAME = '{}.project'.format(DATABASE_NAME)
+
+
 '''
 INIT_PHASE = ('VAR', 'LOAD_ODS_VIEWS',)
 ETL_PHASE = ('HUBS', 'LINKS', 'SATELLITES', )
