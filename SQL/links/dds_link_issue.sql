@@ -5,7 +5,7 @@ with source_data as (
 		ISSUE_PK,
 		USER_PK, SERVICE_PK,
 		LOAD_DATE, RECORD_SOURCE
-	from yfurman.project_view_issue_one_year_{{ execution_date.year }}
+	from {{ params.prefix }}_view_issue_one_year_{{ execution_date.year }}
 ),
 records_to_insert as (
 	select distinct 
@@ -13,11 +13,11 @@ records_to_insert as (
 		stg.USER_PK, stg.SERVICE_PK,
 		stg.LOAD_DATE, stg.RECORD_SOURCE
 	from source_data as stg 
-	left join yfurman.project_dds_link_issue as tgt
+	left join {{ params.prefix }}_dds_link_issue as tgt
 	on stg.ISSUE_PK = tgt.ISSUE_PK
 	where tgt.ISSUE_PK is null		
 )
-insert into yfurman.project_dds_link_issue (
+insert into {{ params.prefix }}_dds_link_issue (
 	ISSUE_PK,
 	USER_PK, SERVICE_PK,
 	LOAD_DATE, RECORD_SOURCE)
