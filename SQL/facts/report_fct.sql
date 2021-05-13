@@ -1,6 +1,6 @@
 -- 11. INSERT INTO FACTS TABLE
 
-insert into yfurman.project_report_fct(
+insert into {{ params.prefix }}_report_fct(
 			billing_year_id,
 			legal_type_id,
 			district_id,
@@ -14,9 +14,9 @@ insert into yfurman.project_report_fct(
 		)
 select biy.id, lt.id, d.id, ry.id, bm.id, is_vip, 
 	   raw.payment_sum, raw.billing_sum, raw.issue_cnt, raw.traffic_amount
-from yfurman.project_report_tmp_{{ execution_date.year }} raw
-join yfurman.project_report_dim_billing_year biy on raw.billing_year = biy.billing_year_key
-join yfurman.project_report_dim_legal_type lt on raw.legal_type = lt.legal_type_key
-join yfurman.project_report_dim_district d on raw.district = d.district_key
-join yfurman.project_report_dim_registration_year ry on raw.registration_year = ry.registration_year_key
-join yfurman.project_report_dim_billing_mode bm on raw.billing_mode = bm.billing_mode_key;
+from {{ params.prefix }}_report_tmp_{{ execution_date.year }} raw
+join {{ params.prefix }}_report_dim_billing_year biy on raw.billing_year = biy.billing_year_key
+join {{ params.prefix }}_report_dim_legal_type lt on raw.legal_type = lt.legal_type_key
+join {{ params.prefix }}_report_dim_district d on raw.district = d.district_key
+join {{ params.prefix }}_report_dim_registration_year ry on raw.registration_year = ry.registration_year_key
+join {{ params.prefix }}_report_dim_billing_mode bm on raw.billing_mode = bm.billing_mode_key;
