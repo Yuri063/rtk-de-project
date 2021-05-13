@@ -7,7 +7,7 @@ with row_rank_1 as (
 				partition by SERVICE_PK
 				order by LOAD_DATE ASC
 			) as row_num
-		from yfurman.project_view_billing_one_year_{{ execution_date.year }}		
+		from {{ params.prefix }}_view_billing_one_year_{{ execution_date.year }}		
 	) as h where row_num = 1
 ),
 row_rank_2 as (
@@ -17,7 +17,7 @@ row_rank_2 as (
 				partition by SERVICE_PK
 				order by LOAD_DATE ASC
 			) as row_num
-		from yfurman.project_view_issue_one_year_{{ execution_date.year }}		
+		from {{ params.prefix }}_view_issue_one_year_{{ execution_date.year }}		
 	) as h where row_num = 1
 ),
 stage_union as (
@@ -39,11 +39,11 @@ raw_union as (
 records_to_insert as (
 		select a.SERVICE_PK, a.SERVICE_KEY, a.LOAD_DATE, a.RECORD_SOURCE
 		from raw_union as a
-		left join yfurman.project_dds_hub_service as d
+		left join {{ params.prefix }}_dds_hub_service as d
 		on a.SERVICE_PK = d.SERVICE_PK
 		where d.SERVICE_PK is NULL
 )
-insert into yfurman.project_dds_hub_service (SERVICE_PK, SERVICE_KEY, LOAD_DATE, RECORD_SOURCE)
+insert into {{ params.prefix }}_dds_hub_service (SERVICE_PK, SERVICE_KEY, LOAD_DATE, RECORD_SOURCE)
 (
 	select SERVICE_PK, SERVICE_KEY, LOAD_DATE, RECORD_SOURCE
 	from records_to_insert
