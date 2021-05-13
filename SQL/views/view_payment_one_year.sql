@@ -1,6 +1,6 @@
 -- 1.3.1 CREATE VIEW FOR PAYMENT
 
-create or replace view yfurman.project_view_payment_one_year_{{ execution_date.year }} as (
+create or replace view {{ params.prefix }}_view_payment_one_year_{{ execution_date.year }} as (
 
 	with staging as (
 		with derived_columns as (
@@ -19,7 +19,7 @@ create or replace view yfurman.project_view_payment_one_year_{{ execution_date.y
 				pay_doc_type::varchar as PAY_DOC_TYPE_KEY,
 				pay_doc_num::varchar as PAY_DOC_NUM_KEY,
 				'PAYMENT - DATA LAKE'::varchar as RECORD_SOURCE
-			from yfurman.project_ods_payment 
+			from {{ params.prefix }}_ods_payment 
 			where cast(extract('year' from cast(pay_date as timestamp)) as int) = {{ execution_date.year }}			
 		),
 		
@@ -91,7 +91,6 @@ create or replace view yfurman.project_view_payment_one_year_{{ execution_date.y
 	)
 	
 	select *, 
-			--current_timestamp as LOAD_DATE,
 			'{{ execution_date }}'::timestamp as LOAD_DATE,
 			pay_date as EFFECTIVE_FROM
 	from staging
