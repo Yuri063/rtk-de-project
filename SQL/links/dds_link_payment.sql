@@ -5,7 +5,7 @@ with source_data as (
 		PAYMENT_PK,
 		USER_PK, ACCOUNT_PK, BILLING_PERIOD_PK, PAY_DOC_TYPE_PK,
 		LOAD_DATE, RECORD_SOURCE
-	from yfurman.project_view_payment_one_year_{{ execution_date.year }}
+	from {{ params.prefix }}_view_payment_one_year_{{ execution_date.year }}
 ),
 records_to_insert as (
 	select distinct 
@@ -13,11 +13,11 @@ records_to_insert as (
 		stg.USER_PK, stg.ACCOUNT_PK, stg.BILLING_PERIOD_PK, stg.PAY_DOC_TYPE_PK,
 		stg.LOAD_DATE, stg.RECORD_SOURCE
 	from source_data as stg 
-	left join yfurman.project_dds_link_payment as tgt
+	left join {{ params.prefix }}_dds_link_payment as tgt
 	on stg.PAYMENT_PK = tgt.PAYMENT_PK
 	where tgt.PAYMENT_PK is null		
 )
-insert into yfurman.project_dds_link_payment (
+insert into {{ params.prefix }}_dds_link_payment (
 	PAYMENT_PK,
 	USER_PK, ACCOUNT_PK, BILLING_PERIOD_PK, PAY_DOC_TYPE_PK,
 	LOAD_DATE, RECORD_SOURCE)
