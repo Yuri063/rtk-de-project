@@ -6,7 +6,7 @@ with source_data as (
 		phone, 
 		EFFECTIVE_FROM, 
 		LOAD_DATE, RECORD_SOURCE
-	from yfurman.project_view_payment_one_year_{{ execution_date.year }}
+	from {{ params.prefix }}_view_payment_one_year_{{ execution_date.year }}
 ),
 update_records as (
 	select 
@@ -14,7 +14,7 @@ update_records as (
 		a.phone, 
 		a.EFFECTIVE_FROM, 
 		a.LOAD_DATE, a.RECORD_SOURCE
-	from yfurman.project_dds_sat_user_details as a
+	from {{ params.prefix }}_dds_sat_user_details as a
 	join source_data as b
 	on a.USER_PK = b.USER_PK
 	where  a.LOAD_DATE <= b.LOAD_DATE
@@ -42,7 +42,7 @@ records_to_insert as (
 	   latest_records.USER_PK = e.USER_PK
 	where latest_records.USER_HASHDIFF is NULL
 )	
-insert into yfurman.project_dds_sat_user_details (
+insert into {{ params.prefix }}_dds_sat_user_details (
 	USER_PK, USER_HASHDIFF, 
 	phone, 
 	EFFECTIVE_FROM, 
