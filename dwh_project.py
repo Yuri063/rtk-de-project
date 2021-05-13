@@ -100,7 +100,7 @@ def get_jobs_context(phase_name, job):
             dag=dag,
             #template_searchpath=[search_path],         
             #sql=task_file_name
-            params={'prefix': PREFIX_NAME}
+            params={'prefix': PREFIX_NAME},
             sql=os.path.join(job.source_path, task_file_name)
         ))            
     return tasks
