@@ -1,6 +1,6 @@
 -- 1.3.4 CREATE VIEW FOR ISSUE
 
-create view rtk_de.yfurman.project_view_issue_one_year_{{ execution_date.year }} as (
+create view {{ params.prefix }}_view_issue_one_year_{{ execution_date.year }} as (
 
 	with staging as (
 		with derived_columns as (
@@ -14,7 +14,7 @@ create view rtk_de.yfurman.project_view_issue_one_year_{{ execution_date.year }}
 				user_id::varchar as USER_KEY,
 				service::varchar as SERVICE_KEY,
 				'ISSUE - DATA LAKE'::varchar as RECORD_SOURCE
-			from yfurman.project_ods_issue
+			from {{ params.prefix }}_ods_issue
 			where cast(extract('year' from start_time) as int) = {{ execution_date.year }}
 		),
 		
@@ -66,8 +66,7 @@ create view rtk_de.yfurman.project_view_issue_one_year_{{ execution_date.year }}
 		select * from columns_to_select
 	)
 	
-	select *, 
-			--current_timestamp as LOAD_DATE,			
+	select *, 			
 	        '{{ execution_date }}'::timestamp as LOAD_DATE,
 			start_time as EFFECTIVE_FROM
 	from staging
