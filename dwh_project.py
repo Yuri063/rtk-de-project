@@ -13,7 +13,8 @@ ROOT_DIR = os.getenv('AIRFLOW__CORE__DAGS_FOLDER', '/root/airflow/dags')
 #DATA_DIR = '{}/SQL'.format(USERNAME)
 DATA_DIR = '{}/SQL'.format(HOME_PATH)
 
-DATABASE_NAME = 'rtk_de.{}'.format(USERNAME)
+#DATABASE_NAME = 'rtk_de.{}'.format(USERNAME)
+DATABASE_NAME = USERNAME
 PREFIX_NAME = '{}.project'.format(DATABASE_NAME)
 
 
