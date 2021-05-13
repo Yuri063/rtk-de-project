@@ -5,7 +5,7 @@ with source_data as (
 		MDM_PK,
 		USER_PK, LEGAL_TYPE_PK, DISTRICT_PK, BILLING_MODE_PK,
 		LOAD_DATE, RECORD_SOURCE
-	from yfurman.project_view_mdm_one_year_{{ execution_date.year }}
+	from {{ params.prefix }}_view_mdm_one_year_{{ execution_date.year }}
 ),
 records_to_insert as (
 	select distinct 
@@ -13,11 +13,11 @@ records_to_insert as (
 		stg.USER_PK, stg.LEGAL_TYPE_PK, stg.DISTRICT_PK, stg.BILLING_MODE_PK,
 		stg.LOAD_DATE, stg.RECORD_SOURCE
 	from source_data as stg 
-	left join yfurman.project_dds_link_mdm as tgt
+	left join {{ params.prefix }}_dds_link_mdm as tgt
 	on stg.MDM_PK = tgt.MDM_PK
 	where tgt.MDM_PK is null		
 )
-insert into yfurman.project_dds_link_mdm (
+insert into {{ params.prefix }}_dds_link_mdm (
 	MDM_PK,
 	USER_PK, LEGAL_TYPE_PK, DISTRICT_PK, BILLING_MODE_PK,
 	LOAD_DATE, RECORD_SOURCE)
