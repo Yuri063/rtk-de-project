@@ -68,7 +68,7 @@ create view rtk_de.yfurman.project_view_issue_one_year_{{ execution_date.year }}
 	
 	select *, 
 			--current_timestamp as LOAD_DATE,			
-	        '{{ execution_date.year }}'::timestamp as LOAD_DATE,
+	        '{{ execution_date }}'::timestamp as LOAD_DATE,
 			start_time as EFFECTIVE_FROM
 	from staging
 );
