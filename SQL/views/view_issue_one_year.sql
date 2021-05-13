@@ -15,7 +15,7 @@ create view rtk_de.yfurman.project_view_issue_one_year_{{ execution_date.year }}
 				service::varchar as SERVICE_KEY,
 				'ISSUE - DATA LAKE'::varchar as RECORD_SOURCE
 			from yfurman.project_ods_issue
-			where cast(extract('year' from created_at) as int) = {{ execution_date.year }}
+			where cast(extract('year' from start_time) as int) = {{ execution_date.year }}
 		),
 		
 		hashed_columns as (
