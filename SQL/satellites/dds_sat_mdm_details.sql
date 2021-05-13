@@ -6,7 +6,7 @@ with source_data as (
 		registered_at, is_vip,
 		EFFECTIVE_FROM, 
 		LOAD_DATE, RECORD_SOURCE
-	from yfurman.project_view_mdm_one_year_{{ execution_date.year }}
+	from {{ params.prefix }}_view_mdm_one_year_{{ execution_date.year }}
 ),
 update_records as (
 	select 
@@ -14,7 +14,7 @@ update_records as (
 		a.registered_at, a.is_vip,
 		a.EFFECTIVE_FROM, 
 		a.LOAD_DATE, a.RECORD_SOURCE
-	from yfurman.project_dds_sat_mdm_details as a
+	from {{ params.prefix }}_dds_sat_mdm_details as a
 	join source_data as b
 	on a.MDM_PK = b.MDM_PK
 	where  a.LOAD_DATE <= b.LOAD_DATE
@@ -42,7 +42,7 @@ records_to_insert as (
 	   latest_records.MDM_PK = e.MDM_PK
 	where latest_records.MDM_HASHDIFF is NULL
 )	
-insert into yfurman.project_dds_sat_mdm_details (
+insert into {{ params.prefix }}_dds_sat_mdm_details (
 	MDM_PK, MDM_HASHDIFF, 
 	registered_at, is_vip,
 	EFFECTIVE_FROM, 
