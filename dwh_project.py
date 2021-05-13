@@ -92,13 +92,14 @@ def get_jobs_context(phase_name, job):
 
 def get_jobs_context(phase_name, job):
     tasks = []
-    search_path = os.path.join(ROOT_DIR, DATA_DIR, job.source_path)
+    #search_path = os.path.join(ROOT_DIR, DATA_DIR, job.source_path)
     for task_file_name in [i for i in os.listdir(search_path) if i.endswith(job.mask)]:
         tasks.append(PostgresOperator(
             task_id='{}_{}_{}'.format(phase_name, job.name, os.path.splitext(task_file_name)[0]),
             dag=dag,
-            template_searchpath=[search_path],         
-            sql=task_file_name
+            #template_searchpath=[search_path],         
+            #sql=task_file_name
+            sql=os.path.join(job.source_path, task_file_name)
         ))            
     return tasks
 
@@ -121,7 +122,8 @@ default_args = {
 dag = DAG(
     PREFIX_NAME,
     default_args=default_args,
-    description='Data Warehouse - Project Work',    
+    description='Data Warehouse - Project Work', 
+    template_searchpath=[os.path.join(ROOT_DIR, DATA_DIR)],         
     schedule_interval="0 0 1 1 *",
     concurrency=1,
     max_active_runs=1,
