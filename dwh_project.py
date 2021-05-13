@@ -10,21 +10,11 @@ USERNAME = 'yfurman'
 HOME_PATH = 'furman2'
 
 ROOT_DIR = os.getenv('AIRFLOW__CORE__DAGS_FOLDER', '/root/airflow/dags')
-#DATA_DIR = '{}/SQL'.format(USERNAME)
 DATA_DIR = '{}/SQL'.format(HOME_PATH)
 
-#DATABASE_NAME = 'rtk_de.{}'.format(USERNAME)
 DATABASE_NAME = USERNAME
 PREFIX_NAME = '{}.project'.format(DATABASE_NAME)
 
-
-'''
-INIT_PHASE = ('VAR', 'LOAD_ODS_VIEWS',)
-ETL_PHASE = ('HUBS', 'LINKS', 'SATELLITES', )
-DM_PHASE = ('CREATE_TMP_REPORT', 'DIMENSIONS', 'FACTS',)
-#FINISH_PHASE = ('DROP_ODS_VIEWS', 'DROP_TMP_REPORT', 'DROP_VAR',)
-FINISH_PHASE = ('CLEAR',)
-'''
 
 FactoryPhase = namedtuple('FactoryPhase', ['name', 'list_jobs'])
 FactoryJob = namedtuple('FactoryJob', ['name', 'source_path', 'mask'])
@@ -61,45 +51,13 @@ PHASES = (
     ),
 )
 
-'''
-def get_jobs_context(jobs_name):
-    tasks = []
-    list_task_files = [i for i in os.listdir(os.path.join(ROOT_DIR, DATA_DIR, jobs_name)) if i.endswith('.sql')]
-    for task_file_name in list_task_files:
-        with open(os.path.join(ROOT_DIR, DATA_DIR, jobs_name, task_file_name)) as task_file:
-            tasks.append(PostgresOperator(
-                task_id='{}_{}'.format(jobs_name, os.path.splitext(task_file_name)[0])),
-                dag=dag,
-                sql=task_file.read()
-            ))            
-    return tasks
-'''
 
-'''
-def get_jobs_context(phase_name, job):
+def get_job_context(phase_name, job):
     tasks = []
-    list_task_files = [i for i in os.listdir(os.path.join(ROOT_DIR, DATA_DIR, job.source_path)) if i.endswith(job.mask)]
-    for task_file_name in list_task_files:
-        with open(os.path.join(ROOT_DIR, DATA_DIR, job.source_path, task_file_name)) as task_file:
-            tasks.append(PostgresOperator(
-                task_id='{}_{}_{}'.format(phase_name, job.name, os.path.splitext(task_file_name)[0])),
-                dag=dag,
-                sql=task_file.read()
-            ))            
-    return tasks
-'''
-
-
-def get_jobs_context(phase_name, job):
-    tasks = []
-    #search_path = os.path.join(ROOT_DIR, DATA_DIR, job.source_path)
-    #for task_file_name in [i for i in os.listdir(search_path) if i.endswith(job.mask)]:
     for task_file_name in [i for i in os.listdir(os.path.join(ROOT_DIR, DATA_DIR, job.source_path)) if i.endswith(job.mask)]:
         tasks.append(PostgresOperator(
             task_id='{}_{}_{}'.format(phase_name, job.name, os.path.splitext(task_file_name)[0]),
             dag=dag,
-            #template_searchpath=[search_path],         
-            #sql=task_file_name
             params={'prefix': PREFIX_NAME},
             sql=os.path.join(job.source_path, task_file_name)
         ))            
@@ -112,7 +70,6 @@ def get_check_point(phase_name, job_name):
 
 default_args = {
     'owner': USERNAME,
-    #'depends_on_past': False,
     'depends_on_past': True,
     'start_date': datetime(2010, 1, 1, 0, 0, 0),
     'email': ['airflow@example.com'],
@@ -132,22 +89,15 @@ dag = DAG(
     max_active_runs=1,
 )
 
-'''
-for phase in (INIT_PHASE, ETL_PHASE, DM_PHASE, FINISH_PHASE):
-    check_point = None
-    for jobs in phase:
-        check_point = get_check_point(jobs)
-        get_jobs_context(jobs) >> check_point
-'''
 
 check_point_last = None
 for phase in PHASES:   
     for job in phase.list_jobs:
         check_point = get_check_point(phase.name, job.name)
         if check_point_last:
-            check_point_last >> get_jobs_context(phase.name, job) >> check_point
+            check_point_last >> get_job_context(phase.name, job) >> check_point
         else:
-            get_jobs_context(phase.name, job) >> check_point
+            get_job_context(phase.name, job) >> check_point
         check_point_last = check_point
         
 
