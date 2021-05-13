@@ -7,7 +7,7 @@ from airflow.operators.postgres_operator import PostgresOperator
 from airflow.operators.dummy_operator import DummyOperator
 
 
-USERNAME = 'furman2'
+USERNAME = 'yfurman'
 
 ROOT_DIR = os.getenv('AIRFLOW__CORE__DAGS_FOLDER', '/root/airflow/dags')
 DATA_DIR = '{}/SQL'.format(USERNAME)
