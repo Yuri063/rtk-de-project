@@ -1,5 +1,7 @@
 -- 11. INSERT INTO FACTS TABLE
 
+truncate {{ params.prefix }}_report_fct;
+
 insert into {{ params.prefix }}_report_fct(
 			billing_year_id,
 			legal_type_id,
