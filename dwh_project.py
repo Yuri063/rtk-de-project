@@ -131,7 +131,7 @@ for phase in PHASES:
         check_point = get_check_point(phase.name, job.name)
         job_context = get_job_context(phase.name, job)
         if phase.latest_only:
-                LatestOnlyOperator(task_id=task_id="{}_{}_complete".format(phase_name, job), dag=dag) >> job_context
+            LatestOnlyOperator(task_id=task_id="{}_{}_complete".format(phase_name, job), dag=dag) >> job_context
         if check_point_last:
             check_point_last >> job_context >> check_point          
         else:
