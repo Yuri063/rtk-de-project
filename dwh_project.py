@@ -94,7 +94,8 @@ def get_check_point(phase_name, job_name):
 
 default_args = {
     'owner': USERNAME,
-    'depends_on_past': True,
+    #'depends_on_past': True,
+    'depends_on_past': False,
     'start_date': datetime(2010, 1, 1, 0, 0, 0),
     'email': ['airflow@example.com'],
     'email_on_failure': False,
