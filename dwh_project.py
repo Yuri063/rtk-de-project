@@ -6,6 +6,7 @@ from airflow import DAG
 from airflow.operators.postgres_operator import PostgresOperator
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import ShortCircuitOperator
+from airflow.operators.latest_only_operator import LatestOnlyOperator
 from airflow.models import TaskInstance
 
 USERNAME = 'yfurman'
@@ -112,6 +113,17 @@ dag = DAG(
     max_active_runs=1,
 )
 
+'''
+check_point_last = None
+for phase in PHASES:   
+    for job in phase.list_jobs:
+        check_point = get_check_point(phase.name, job.name)
+        if check_point_last:
+            check_point_last >> get_job_context(phase.name, job) >> check_point
+        else:
+            get_job_context(phase.name, job) >> check_point
+        check_point_last = check_point
+'''
 
 check_point_last = None
 for phase in PHASES:   
