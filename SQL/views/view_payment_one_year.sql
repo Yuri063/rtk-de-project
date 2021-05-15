@@ -92,6 +92,6 @@ create or replace view {{ params.prefix }}_view_payment_one_year_{{ execution_da
 	
 	select *, 
 			'{{ execution_date }}'::timestamp as LOAD_DATE,
-			pay_date as EFFECTIVE_FROM
+			pay_date::timestamp as EFFECTIVE_FROM
 	from staging
 );
