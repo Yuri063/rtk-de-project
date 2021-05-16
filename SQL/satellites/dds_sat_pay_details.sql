@@ -1,4 +1,4 @@
--- 5.3.2 insert SAT_PAY_DETAILS, SOURCE:PAYMENT
+-- 7.5.2 insert SAT_PAY_DETAILS, SOURCE:PAYMENT
 
 with source_data as (
 	select 
