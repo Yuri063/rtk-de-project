@@ -1,4 +1,4 @@
--- 5.2.3 insert LINK_BILLING, SOURCE:BILLING
+-- 7.4.3 insert LINK_BILLING, SOURCE:BILLING
 
 with source_data as (
 	select 
