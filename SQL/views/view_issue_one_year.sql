@@ -1,4 +1,4 @@
--- 1.3.4 CREATE VIEW FOR ISSUE
+-- 7.2.4 CREATE VIEW FOR ISSUE
 
 create or replace view {{ params.prefix }}_view_issue_one_year_{{ execution_date.year }} as (
 
