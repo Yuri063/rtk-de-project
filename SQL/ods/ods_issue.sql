@@ -1,3 +1,5 @@
+-- 7.1.3 insert into ODS: ISSUE
+
 alter table if exists {{ params.prefix }}_ods_issue truncate partition for('{{execution_date}}');
 insert into {{ params.prefix }}_ods_issue (
 	select 
