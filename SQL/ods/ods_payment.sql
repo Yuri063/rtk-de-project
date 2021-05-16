@@ -1,3 +1,5 @@
+-- 7.1.1 insert into ODS: PAYMENT
+
 alter table if exists {{ params.prefix }}_ods_payment truncate partition for('{{execution_date}}');
 insert into {{ params.prefix }}_ods_payment (
 	select 
