@@ -1,4 +1,4 @@
--- 5.2.5 insert LINK_TRAFFIC, SOURCE:TRAFFIC
+-- 7.4.5 insert LINK_TRAFFIC, SOURCE:TRAFFIC
 
 with source_data as (
 	select 
