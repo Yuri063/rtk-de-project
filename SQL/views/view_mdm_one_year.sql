@@ -1,4 +1,4 @@
--- 1.3.2 CREATE VIEW FOR MDM
+-- 7.2.2 CREATE VIEW FOR MDM
 
 create or replace view {{ params.prefix }}_view_mdm_one_year_{{ execution_date.year }} as (
 
