@@ -33,6 +33,7 @@ PHASES = (
     FactoryPhase(
         name='ETL', latest_only = False,
         list_jobs=(
+            FactoryJob(name='ODS', source_path='ods', mask='.sql'),            
             FactoryJob(name='HUBS', source_path='hubs', mask='.sql'),
             FactoryJob(name='LINKS', source_path='links', mask='.sql'),
             FactoryJob(name='SATELLITES', source_path='satellites', mask='.sql'),
