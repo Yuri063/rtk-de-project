@@ -1,4 +1,4 @@
--- 10.2 INSERT INTO DEMENSION TABLEs REPORT_DIM_LEGAL_TYPE
+-- 8.2.2 INSERT INTO DEMENSION TABLEs REPORT_DIM_LEGAL_TYPE
 
 insert into {{ params.prefix }}_report_dim_legal_type(legal_type_key)
 select distinct legal_type as legal_type_key 
