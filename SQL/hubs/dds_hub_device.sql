@@ -1,4 +1,4 @@
--- 5.1.10 insert HUB_DEVICE, SOURCE:TRAFFIC
+-- 7.3.10 insert HUB_DEVICE, SOURCE:TRAFFIC
 
 with row_rank_1 as (
 	select * from (
