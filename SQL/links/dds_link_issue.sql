@@ -1,4 +1,4 @@
--- 5.2.4 insert LINK_ISSUE, SOURCE:ISSUE
+-- 7.4.4 insert LINK_ISSUE, SOURCE:ISSUE
 
 with source_data as (
 	select 
