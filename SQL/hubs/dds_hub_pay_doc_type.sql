@@ -1,4 +1,4 @@
--- 5.1.4 insert HUB_PAY_DOC_TYPE
+-- 7.3.4 insert HUB_PAY_DOC_TYPE
 
 with row_rank_1 as (
 		select * from (
