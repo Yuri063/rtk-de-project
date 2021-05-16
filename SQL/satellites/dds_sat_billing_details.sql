@@ -1,4 +1,4 @@
--- 5.3.4 insert SAT_BILLING_DETAILS, SOURCE:BILLING
+-- 7.5.4 insert SAT_BILLING_DETAILS, SOURCE:BILLING
 
 with source_data as (
 	select 
