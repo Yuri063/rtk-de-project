@@ -1,4 +1,4 @@
--- 5.3.6 insert SAT_TRAFFIC_DETAILS, SOURCE:TRAFFIC
+-- 7.5.6 insert SAT_TRAFFIC_DETAILS, SOURCE:TRAFFIC
 
 with source_data as (
 	select 
