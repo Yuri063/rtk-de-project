@@ -1,4 +1,4 @@
--- 5.1.2 insert HUB_ACCOUNT
+-- 7.3.2 insert HUB_ACCOUNT
 
 with row_rank_1 as (
 		select * from (
