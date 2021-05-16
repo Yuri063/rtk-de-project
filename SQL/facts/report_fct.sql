@@ -1,4 +1,4 @@
--- 11. INSERT INTO FACTS TABLE
+-- 8.3 INSERT INTO FACTS TABLE
 
 truncate {{ params.prefix }}_report_fct;
 
