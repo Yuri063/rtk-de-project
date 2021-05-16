@@ -1,4 +1,4 @@
--- 10.1 INSERT INTO DEMENSION TABLEs REPORT_DIM_BILLING_YEAR
+-- 8.2.1 INSERT INTO DEMENSION TABLEs REPORT_DIM_BILLING_YEAR
 
 insert into {{ params.prefix }}_report_dim_billing_year(billing_year_key)
 select distinct billing_year as billing_year_key 
