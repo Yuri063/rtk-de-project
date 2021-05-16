@@ -1,12 +1,15 @@
--- 5.3.1 insert SAT_USER_DETAILS, SOURCE:PAYMENT
+-- 7.5.1 insert SAT_USER_DETAILS, SOURCE:PAYMENT
 
 with source_data as (
-	select 
-		USER_PK, USER_HASHDIFF, 
-		phone, 
-		EFFECTIVE_FROM, 
-		LOAD_DATE, RECORD_SOURCE
-	from {{ params.prefix }}_view_payment_one_year_{{ execution_date.year }}
+	select * from (
+		select 
+			USER_PK, USER_HASHDIFF, 
+			phone, 
+			EFFECTIVE_FROM, 
+			LOAD_DATE, RECORD_SOURCE,
+			lag(phone) OVER (PARTITION BY USER_PK ORDER BY EFFECTIVE_FROM) AS prev_state
+		from {{ params.prefix }}_view_payment_one_year_{{ execution_date.year }}
+	) as sd where phone IS DISTINCT FROM prev_state
 ),
 update_records as (
 	select 
