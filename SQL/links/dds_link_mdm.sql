@@ -1,4 +1,4 @@
--- 5.2.2 insert LINK_MDM, SOURCE:MDM
+-- 7.4.2 insert LINK_MDM, SOURCE:MDM
 
 with source_data as (
 	select 
