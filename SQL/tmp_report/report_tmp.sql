@@ -1,4 +1,4 @@
--- 9. CREATE TMP TABLE (for ONE YEAR)
+-- 8.1 CREATE TMP REPORT_TABLE
 
 drop  table if exists {{ params.prefix }}_report_tmp_{{ execution_date.year }};
 create table {{ params.prefix }}_report_tmp_{{ execution_date.year }} as (
