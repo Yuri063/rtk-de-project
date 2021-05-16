@@ -1,4 +1,4 @@
--- 5.1.6 insert HUB_DISTRICT, SOURCE:MDM
+-- 7.3.6 insert HUB_DISTRICT, SOURCE:MDM
 
 with row_rank_1 as (
 	select * from (
