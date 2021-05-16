@@ -1,4 +1,4 @@
--- 1.3.1 CREATE VIEW FOR PAYMENT
+-- 7.2.1 CREATE VIEW FOR PAYMENT
 
 create or replace view {{ params.prefix }}_view_payment_one_year_{{ execution_date.year }} as (
 
