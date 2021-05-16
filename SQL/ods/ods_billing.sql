@@ -1,3 +1,5 @@
+-- 7.1.2 insert into ODS: BILLING
+
 alter table if exists {{ params.prefix }}_ods_billing truncate partition for('{{execution_date}}');
 insert into {{ params.prefix }}_ods_billing (
 	select 
