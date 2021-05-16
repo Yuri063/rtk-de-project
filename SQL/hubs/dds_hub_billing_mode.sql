@@ -1,4 +1,4 @@
--- 5.1.7 insert HUB_BILLING_MODE, SOURCE:MDM 
+-- 7.3.7 insert HUB_BILLING_MODE, SOURCE:MDM 
 
 with row_rank_1 as (
 	select * from (
