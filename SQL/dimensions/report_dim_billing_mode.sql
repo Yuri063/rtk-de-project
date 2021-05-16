@@ -1,4 +1,4 @@
--- 10.5 INSERT INTO DEMENSION TABLEs REPORT_DIM_BILLING_MODE
+-- 8.2.5 INSERT INTO DEMENSION TABLEs REPORT_DIM_BILLING_MODE
 
 insert into {{ params.prefix }}_report_dim_billing_mode(billing_mode_key)
 select distinct billing_mode as billing_mode_key 
