@@ -1,4 +1,4 @@
--- 5.1.3 insert HUB_BILLING_PERIOD
+-- 7.3.3 insert HUB_BILLING_PERIOD
 
 with row_rank_1 as (
 	select * from (
