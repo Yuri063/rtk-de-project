@@ -1,4 +1,4 @@
--- 5.1.8 insert HUB_TARIFF, SOURCE:BILLING
+-- 7.3.8 insert HUB_TARIFF, SOURCE:BILLING
 
 with row_rank_1 as (
 	select * from (
