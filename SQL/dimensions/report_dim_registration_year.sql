@@ -1,4 +1,4 @@
--- 10.4 INSERT INTO DEMENSION TABLEs REPORT_DIM_REGISTRATION_YEAR
+-- 8.2.4 INSERT INTO DEMENSION TABLEs REPORT_DIM_REGISTRATION_YEAR
 
 insert into {{ params.prefix }}_report_dim_registration_year(registration_year_key)
 select distinct registration_year as registration_year_key 
