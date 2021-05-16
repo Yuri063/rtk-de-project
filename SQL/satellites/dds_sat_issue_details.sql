@@ -1,4 +1,4 @@
--- 5.3.5 insert SAT_ISSUE_DETAILS, SOURCE:ISSUE
+-- 7.5.5 insert SAT_ISSUE_DETAILS, SOURCE:ISSUE
 
 with source_data as (
 	select 
