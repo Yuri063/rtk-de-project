@@ -1,3 +1,5 @@
+-- 7.1.4 insert into ODS: TRAFFIC
+
 alter table if exists {{ params.prefix }}_ods_traffic truncate partition for('{{execution_date}}');
 insert into {{ params.prefix }}_ods_traffic (
 	select 
