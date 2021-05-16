@@ -1,4 +1,4 @@
--- 1.3.3 CREATE VIEW FOR BILLING
+-- 7.2.3 CREATE VIEW FOR BILLING
 
 create or replace view {{ params.prefix }}_view_billing_one_year_{{ execution_date.year }} as (
 
