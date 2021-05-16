@@ -1,4 +1,4 @@
--- 5.3.3 insert SAT_USER_MDM_DETAILS, SOURCE:MDM
+-- 7.5.3 insert SAT_USER_MDM_DETAILS, SOURCE:MDM
 
 with source_data as (
 	select 
