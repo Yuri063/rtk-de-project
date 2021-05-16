@@ -1,4 +1,4 @@
--- 5.1.1 insert HUB_USER
+-- 7.3.1 insert HUB_USER
 
 with row_rank_1 as (
 	select * from (
