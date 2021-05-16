@@ -1,4 +1,4 @@
--- 10.3 INSERT INTO DEMENSION TABLEs REPORT_DIM_DISTRICT
+-- 8.2.3 INSERT INTO DEMENSION TABLEs REPORT_DIM_DISTRICT
 
 insert into {{ params.prefix }}_report_dim_district(district_key)
 select distinct district as district_key 
