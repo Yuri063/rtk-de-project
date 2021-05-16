@@ -1,4 +1,4 @@
--- 5.1.5 insert HUB_LEGAL_TYPE, SOURCE:MDM 
+-- 7.3.5 insert HUB_LEGAL_TYPE, SOURCE:MDM 
 
 with row_rank_1 as (
 	select * from (
