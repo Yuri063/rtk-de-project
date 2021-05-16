@@ -111,7 +111,7 @@ dag = DAG(
     description='Data Warehouse - Project Work', 
     template_searchpath=[os.path.join(ROOT_DIR, DATA_DIR)],         
     schedule_interval="0 0 1 1 *",
-    #concurrency=1,
+    concurrency=1,
     max_active_runs=1,
 )
 
