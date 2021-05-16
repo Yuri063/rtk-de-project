@@ -1,4 +1,4 @@
--- 1.3.5 CREATE VIEW FOR TRAFFIC
+-- 7.2.5 CREATE VIEW FOR TRAFFIC
 
 create or replace view {{ params.prefix }}_view_traffic_one_year_{{ execution_date.year }} as (
 
