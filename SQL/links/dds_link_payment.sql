@@ -1,4 +1,4 @@
--- 5.2.1 insert LINK_PAYMENT, SOURCE:PAYMENT
+-- 7.4.1 insert LINK_PAYMENT, SOURCE:PAYMENT
 
 with source_data as (
 	select 
