@@ -55,18 +55,6 @@ PHASES = (
     ),
 )
 
-'''
-def check_status(**kwargs):
-    execute_date = kwargs['execute_date']
-    end_date = kwargs['end_date']
-    #ti = TaskInstance(, end_date)
-    #state = ti.current_state()
-    #if state != 'success':
-    for task_instance in kwargs['execute_date'].get_task_instance():
-        if task_instance.current_state() != State.SUCCESS and task_instance.task_id != kwargs['task_instance'].task_id:
-            return False
-    return True
-'''        
 
 def get_job_context(phase_name, job):
     tasks = []
@@ -79,15 +67,6 @@ def get_job_context(phase_name, job):
         ))            
     return tasks
 
-'''
-def get_check_phase(phase):
-    return ShortCircuitOperator(
-        task_id=,
-        provide_context=True,
-        python_callable=check_status,
-        dag=dag,
-    )
-'''
 
 def get_check_point(phase_name, job_name):
     return DummyOperator(task_id="{}_{}_complete".format(phase_name, job_name), dag=dag)
@@ -115,17 +94,6 @@ dag = DAG(
     max_active_runs=1,
 )
 
-'''
-check_point_last = None
-for phase in PHASES:   
-    for job in phase.list_jobs:
-        check_point = get_check_point(phase.name, job.name)
-        if check_point_last:
-            check_point_last >> get_job_context(phase.name, job) >> check_point
-        else:
-            get_job_context(phase.name, job) >> check_point
-        check_point_last = check_point
-'''
 
 check_point_last = None
 for phase in PHASES:          
