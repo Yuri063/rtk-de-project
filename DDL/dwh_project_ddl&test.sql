@@ -528,17 +528,9 @@ for year_num in start..stop
 loop
 	cur_date := to_char(to_date(year_num::VARCHAR, 'YYYY'), 'YYYY-MM-DD');
 	execute 'alter table if exists yfurman.project_ods_payment_test truncate partition for( ''' || cur_date::text || ''')';
-    -- alter table if exists yfurman.project_ods_payment_test truncate partition for( '''cur_date''' );
-	-- select to_char(to_date(year_num::VARCHAR, 'YYYY'), 'YYYY-MM-DD') into cur_date;
-	-- alter table if exists yfurman.project_ods_payment_test truncate partition for( :'cur_date' );
-	-- with cur_date as (select to_char(to_date(year_num::VARCHAR, 'YYYY'), 'YYYY-MM-DD'))
-	-- alter table if exists yfurman.project_ods_payment_test truncate partition for( cur_date );
-	-- null;
 end LOOP;
 end $$ language plpgsql;
 	
-
--- alter table if exists yfurman.project_ods_payment truncate partition for(BEGIN_DATE());
 
 truncate yfurman.project_ods_payment;
 
