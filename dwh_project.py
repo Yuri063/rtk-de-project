@@ -54,10 +54,6 @@ def get_job_context(phase_name, job):
         ))            
     return tasks
 
-
-def get_check_point(phase_name, job_name):
-    return DummyOperator(task_id="{}_{}_complete".format(phase_name, job_name), dag=dag)
-
 default_args = {
     'owner': USERNAME,
     #'depends_on_past': True,
