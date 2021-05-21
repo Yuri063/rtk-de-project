@@ -81,12 +81,15 @@ dag = DAG(
 )
 
 check_point_last = None
-for phase in PHASES:          
+for phase in PHASES:  
+     if phase.latest_only:
+            last_only_point = LatestOnlyOperator(task_id="{}_latest_only".format(phase.name), dag=dag)
+            if check_point_last:
+                check_point_last >> last_only_point
+            check_point_last = last_only_point
     for job in phase.list_jobs:
-        check_point = get_check_point(phase.name, job.name)
+        check_point = DummyOperator(task_id="{}_{}_complete".format(phase.name, job.name), dag=dag)
         job_context = get_job_context(phase.name, job)
-        if phase.latest_only:
-            LatestOnlyOperator(task_id="{}_{}_latest_only".format(phase.name, job.name), dag=dag) >> job_context
         if check_point_last:
             check_point_last >> job_context >> check_point          
         else:
