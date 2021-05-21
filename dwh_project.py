@@ -5,9 +5,8 @@ from collections import namedtuple
 from airflow import DAG
 from airflow.operators.postgres_operator import PostgresOperator
 from airflow.operators.dummy_operator import DummyOperator
-from airflow.operators.python_operator import ShortCircuitOperator
 from airflow.operators.latest_only_operator import LatestOnlyOperator
-from airflow.models import TaskInstance
+
 
 USERNAME = 'yfurman'
 HOME_PATH = 'furman2'
@@ -18,25 +17,19 @@ DATA_DIR = '{}/SQL'.format(HOME_PATH)
 DATABASE_NAME = USERNAME
 PREFIX_NAME = '{}.project'.format(DATABASE_NAME)
 
-
 FactoryPhase = namedtuple('FactoryPhase', ['name', 'latest_only', 'list_jobs'])
 FactoryJob = namedtuple('FactoryJob', ['name', 'source_path', 'mask'])
 
 PHASES = (
     FactoryPhase(
-        name='START', latest_only = False,
-        list_jobs=(
-            #FactoryJob(name='INIT_VAR', source_path='var', mask='.sql'),
-            FactoryJob(name='LOAD_ODS_VIEWS', source_path='views', mask='.sql'),
-        )
-    ),
-    FactoryPhase(
         name='ETL', latest_only = False,
         list_jobs=(
-            FactoryJob(name='ODS', source_path='ods', mask='.sql'),            
+            FactoryJob(name='ODS', source_path='ods', mask='.sql'), 
+            FactoryJob(name='LOAD_VIEWS', source_path='views', mask='.sql'),
             FactoryJob(name='HUBS', source_path='hubs', mask='.sql'),
             FactoryJob(name='LINKS', source_path='links', mask='.sql'),
             FactoryJob(name='SATELLITES', source_path='satellites', mask='.sql'),
+            FactoryJob(name='CLEAR_VIEWS', source_path='clear_views', mask='.sql'),
         )
     ),
     FactoryPhase(
@@ -45,16 +38,10 @@ PHASES = (
             FactoryJob(name='CREATE_TMP_REPORT', source_path='tmp_report', mask='.sql'),
             FactoryJob(name='DIMENSIONS', source_path='dimensions', mask='.sql'),
             FactoryJob(name='FACTS', source_path='facts', mask='.sql'),
-        )
-    ),
-    FactoryPhase(
-        name='FINISH', latest_only = False,
-        list_jobs=(
-            FactoryJob(name='CLEAR', source_path='clear', mask='.sql'),
+            FactoryJob(name='CLEAR_TMP', source_path='clear_tmp', mask='.sql'),
         )
     ),
 )
-
 
 def get_job_context(phase_name, job):
     tasks = []
@@ -70,7 +57,6 @@ def get_job_context(phase_name, job):
 
 def get_check_point(phase_name, job_name):
     return DummyOperator(task_id="{}_{}_complete".format(phase_name, job_name), dag=dag)
-
 
 default_args = {
     'owner': USERNAME,
@@ -93,7 +79,6 @@ dag = DAG(
     concurrency=1,
     max_active_runs=1,
 )
-
 
 check_point_last = None
 for phase in PHASES:          
