@@ -32,6 +32,7 @@
 ***
                                         - Проверки качества для наборов данных с использованием Python-based
                                           open-source library Great Expectations
+                                          Полный отчет по проверкам - см. файл data_docs.zip
  
 ***Folder: SQL*** 
 ***
