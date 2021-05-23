@@ -17,7 +17,7 @@
 ***
     ERD_DDS_Project_DWH.png             - ER-диаграмма детального слоя DWH (в формате png)
     
-    ERD_DM_Project_DWH.png              - ER-диаграмма детального слоя DWH (в формате png)
+    ERD_DM_Project_DWH.png              - ER-диаграмма слоя витрин данных DWH (в формате png)
     
     ERD_STG_ODS_DDS_Project_DWH.drawio  - ER-диаграмма слоев DWH: staging, операциооный слой, детальный слой 
                                           (в формате drawio)
@@ -30,8 +30,8 @@
 
 ***Folder: great_expectations*** 
 ***
-                                        - Проверки качества для наборов данных с использованием open-source 
-                                          library great_expectations
+                                        - Проверки качества для наборов данных с использованием Python-based
+                                          open-source library Great Expectations
  
 ***Folder: SQL*** 
 ***
