@@ -13,6 +13,10 @@
 ***
     dwh_project_ddl&test.sql            - SQL-скрипты для DDL-операций и тестов ETL-процедур для DWH
 
+***Folder: DOCS***
+***
+    Presentation_project_RTK_DE.pdf     - презентация к проекту (в формате pdf)
+
 ***Folder: ERD***
 ***
     ERD_DDS_Project_DWH.png             - ER-диаграмма детального слоя DWH (в формате png)
